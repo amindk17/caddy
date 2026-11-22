@@ -1,0 +1,30 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "docker: build",
+      "type": "shell",
+      "command": "docker build --pull --no-cache -t ghcr.io/amindk17/caddy:latest .",
+      "problemMatcher": []
+    },
+    {
+      "label": "docker: login ghcr",
+      "type": "shell",
+      "command": "gh auth token | docker login ghcr.io -u amindk17 --password-stdin",
+      "problemMatcher": []
+    },
+    {
+      "label": "docker: push",
+      "type": "shell",
+      "command": "docker push ghcr.io/amindk17/caddy:latest",
+      "problemMatcher": []
+    },
+    {
+      "label": "docker: build & push",
+      "dependsOrder": "sequence",
+      "dependsOn": ["docker: login ghcr", "docker: build", "docker: push"],
+      "problemMatcher": [],
+      "group": { "kind": "build", "isDefault": true }
+    }
+  ]
+}
